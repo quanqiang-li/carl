@@ -11,7 +11,7 @@ public class ApplicationContextDemo {
 	/**
 	 * 初始化spring容器
 	 */
-	void  initContext(){
+	void initContainer(){
 		//classpath对应的位置就是src下的目录
 		ApplicationContext context1 = new ClassPathXmlApplicationContext("conf/services.xml");
 		ApplicationContext context2 = new ClassPathXmlApplicationContext(new String[] {"services.xml","conf/services.xml"});//同时加载多个文件
@@ -20,10 +20,19 @@ public class ApplicationContextDemo {
 		ApplicationContext context4 = new FileSystemXmlApplicationContext("classpath:conf/services.xml");//可以指定使用classpath加载资源，那么位置在src下
 	}
 
+	/**
+	 * 使用容器
+	 */
+	void useContainer(){
+		ApplicationContext context1 = new ClassPathXmlApplicationContext("services.xml");
+		PetStoreService service = context1.getBean("petStore", PetStoreService.class);
+		PetStoreService service2 = context1.getBean("petStore1", PetStoreService.class);
+		System.out.println(service == service2);
+	}
 
 
 	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"services.xml","conf/services.xml"});//同时加载多个文件
-		PetStoreService service = context.getBean("petStore", PetStoreService.class);
+		ApplicationContextDemo demo = new ApplicationContextDemo();
+		demo.useContainer();
 	}
 }

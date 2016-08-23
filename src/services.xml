@@ -7,9 +7,13 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<!-- 相对路径，忽略开头的斜线，可以是../找上级目录 -->
 	<import resource="conf/services.xml"/>
 
-	<bean id="petStore"
+	<!-- id是唯一标识，name是别名可以有多个，但也是唯一的 -->
+	<bean id="petStore" name="petStore1 petStore2"
 		class="com.carl.spring.core.container.PetStoreService">
 		<!-- additional collaborators and configuration for this bean go here -->
 	</bean>
 	
+	
+	<!-- name可以是bean的id或name -->
+	<alias name="petStore1" alias="petStore3"/>
 </beans>

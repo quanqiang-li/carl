@@ -3,17 +3,23 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
 	<!-- 相对路径，忽略开头的斜线，可以是../找上级目录 -->
-	<import resource="conf/services.xml"/>
+	<import resource="conf/services.xml" />
 
 	<!-- id是唯一标识，name是别名可以有多个，但也是唯一的 -->
 	<bean id="petStore" name="petStore1 petStore2"
 		class="com.carl.spring.core.container.PetStoreService">
-		<!-- additional collaborators and configuration for this bean go here -->
 	</bean>
-	
-	
+
+
 	<!-- name可以是bean的id或name -->
-	<alias name="petStore1" alias="petStore3"/>
+	<alias name="petStore1" alias="petStore3" />
+
+	<!-- 工厂方法实例bean对象 -->
+	<bean id="clientService" class="com.carl.spring.core.bean.ClientService"
+		factory-method="createInstance" />
+		
+	<!-- 默认是单例的，跟设计模式的单例区别，设计模式单例是一个类加载器一个对象，这里是一个容器一个对象 -->	
+	<bean id="scope" class="com.carl.spring.core.bean.Scope" scope="singleton"></bean>	
 </beans>

@@ -7,7 +7,8 @@ public class Test {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("services.xml");
-		ClientService bean = ctx.getBean("clientService",ClientService.class);
-		System.out.println(bean);
+		Scope bean = ctx.getBean("scope1",Scope.class);
+		Scope bean1 = ctx.getBean("scope1",Scope.class);
+		System.out.println(bean==bean1);
 	}
 }

@@ -22,4 +22,6 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 		
 	<!-- 默认是单例的，跟设计模式的单例区别，设计模式单例是一个类加载器一个对象，这里是一个容器一个对象 -->	
 	<bean id="scope" class="com.carl.spring.core.bean.Scope" scope="singleton"></bean>	
+	<!-- 原型，和singleton对立，规则就是无状态的bean用singleton，共用；有状态的用prototype，线程安全,但是资源需要自己释放 -->
+	<bean id="scope1" class="com.carl.spring.core.bean.Scope" scope="prototype"></bean>	
 </beans>

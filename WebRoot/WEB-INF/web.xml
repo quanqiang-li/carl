@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	id="WebApp_ID" version="3.0">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
 	<display-name>carl</display-name>
 
-<!-- web容器上下文加载的配置 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/root-context.xml</param-value>
-	</context-param>
--->
+	<!-- web容器上下文加载的配置 <context-param> <param-name>contextConfigLocation</param-name> 
+		<param-value>/WEB-INF/root-context.xml</param-value> </context-param> -->
 
 	<!-- 初始化webapplicatoncontext,如果没有上面的contextConfigLocation配置，则默认加载/WEB-INF/applicationContext.xml -->
 	<listener>
@@ -19,8 +15,8 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
-	
-	
+
+
 	<!-- 配置字符集过滤器 -->
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -43,27 +39,22 @@
 	<servlet>
 		<servlet-name>springMvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/applicationContext-mvc.xml</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springMvc</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 
-	<!-- cxf入口 
-	<servlet> 
-        <servlet-name>CXFService</servlet-name>
-        <servlet-class>
-        	org.apache.cxf.transport.servlet.CXFServlet  
-		</servlet-class> 
-		<load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping> 
-        <servlet-name>CXFService</servlet-name> 
-        <url-pattern>/ws/*</url-pattern> 
-    </servlet-mapping>
--->
+	<!-- cxf入口 <servlet> <servlet-name>CXFService</servlet-name> <servlet-class> 
+		org.apache.cxf.transport.servlet.CXFServlet </servlet-class> <load-on-startup>1</load-on-startup> 
+		</servlet> <servlet-mapping> <servlet-name>CXFService</servlet-name> <url-pattern>/ws/*</url-pattern> 
+		</servlet-mapping> -->
 
 
 	<welcome-file-list>

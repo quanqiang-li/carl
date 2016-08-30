@@ -16,13 +16,13 @@ import com.carl.user.model.User;
 import com.carl.user.service.IUserService;
 
 @Controller
-@RequestMapping("userController")
+@RequestMapping("/userController")
 public class UserController {
 
 	@Autowired
 	private IUserService userService;
 	
-	@RequestMapping("getUser")
+	@RequestMapping("/getUser")
 	public ModelAndView getUser(HttpServletRequest request,HttpServletResponse response){
 		Map<String, List<User>> model = new HashMap<String, List<User>>();
 		User record = new User();

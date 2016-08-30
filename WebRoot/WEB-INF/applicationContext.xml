@@ -33,6 +33,5 @@
 	<import resource="/spring_hbase.xml" />
 	 -->
 	 <import resource="applicationContext-app.xml" />
-	 <import resource="applicationContext-mvc.xml" />
 	<!--<bean id="mybatisMapperDynamicLoader" class="com.ixinnuo.financial.common.util.web.MybatisMapperDynamicLoader" />-->
 </beans>

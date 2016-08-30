@@ -83,7 +83,7 @@
 	</bean><!-- 读取hive的数据源的配置 <bean id="impalaDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
 		destroy-method="close"> <property name="driverClass"> <value>${jdbc.impala_driver}</value> 
 		</property> <property name="jdbcUrl"> <value>${jdbc.impala_url}</value> </property> 
-		</bean> --><!-- 读取hive的数据源的配置，没有使用连接池 -->
+		</bean> --><!-- 读取hive的数据源的配置，没有使用连接池 
 	<bean id="impalaDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
@@ -94,14 +94,14 @@
 		</property>
 	</bean>
 
-
+-->
 
 	<bean class="com.carl.spring.common.datasource.DynamicDataSource"
 		id="dataSource">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
 				<entry key="f_ds" value-ref="f_dataSource" ></entry>
-				<entry key="impala_ds" value-ref="impalaDataSource"></entry>
+				<!-- <entry key="impala_ds" value-ref="impalaDataSource"></entry> -->
 				<entry key="sjcj_ds" value-ref="sjcjDataSource" ></entry>
 			</map>
 		</property>

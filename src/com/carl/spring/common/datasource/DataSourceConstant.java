@@ -10,7 +10,7 @@ public class DataSourceConstant {
 
     public static final String F_DS = "f_ds";
     
-    public static final String IMPALA_DS = "impala_ds";
+    //public static final String IMPALA_DS = "impala_ds";
     
     public static final String SJCJ_DS = "sjcj_ds";
 }

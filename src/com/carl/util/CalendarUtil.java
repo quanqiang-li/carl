@@ -15,7 +15,7 @@ public class CalendarUtil {
 	 */
 	public static String getCurrDateTime(String pattern) {
 		if(StringUtils.isEmpty(pattern)){
-			pattern = "YYYY-MM-DD";
+			pattern = "YYYY-MM-dd";
 		}
 		DateFormat df = new SimpleDateFormat(pattern);
 		return df.format(new Date());

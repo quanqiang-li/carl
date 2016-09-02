@@ -27,5 +27,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <c:forEach items="${users }" var="user">
     	${user.loginName} &nbsp;${user.realnameFlag}</br>
     </c:forEach>
+    
+    <div id="pagination" class="pagination" ></div>
+
   </body>
 </html>

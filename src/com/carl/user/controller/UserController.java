@@ -20,7 +20,11 @@ import com.carl.spring.common.datasource.DataSourceContextHolder;
 import com.carl.spring.common.web.BaseController;
 import com.carl.user.model.User;
 import com.carl.user.service.IUserService;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 @Controller
 @RequestMapping("userController")
@@ -89,5 +93,34 @@ public class UserController extends BaseController{
 		List<User> users = userService.select(record);
 		model.put("users", users);
 		return new ModelAndView("user/userlist", model);
+	}
+	
+	/**
+	 * mybatis分页拦截器的使用
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getUser4")
+	@ResponseBody
+	public void getUser4(HttpServletRequest request,HttpServletResponse response){
+		ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        String pageStart = request.getParameter("pageStart");
+        String pageSize = request.getParameter("pageSize");
+
+        PageHelper.startPage(Integer.parseInt(pageStart), Integer.parseInt(pageSize), true);
+        User record = new User();
+		record.setSiteCode("wuhan");
+        List<User> users = userService.select(record);
+        map.put("list", users);
+        map.put("totalPage", ((Page) users).getPages());
+        map.put("result", "success");
+
+        try {
+			mapper.writeValue(response.getWriter(), map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 }

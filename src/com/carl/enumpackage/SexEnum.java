@@ -38,6 +38,7 @@ public enum SexEnum {
     public static void main(String[] args) {
     	System.out.println(SexEnum.MR.getKey());
     	System.out.println(SexEnum.MR.getValue());
-    	SexEnum valueOf = SexEnum.valueOf("MR");
+    	SexEnum valueOf = SexEnum.valueOf("MS");
+    	System.out.println(valueOf.getValue());
 	}
 }

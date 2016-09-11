@@ -1,0 +1,19 @@
+{
+  "country_id" : "China",
+  "birthDate" : "2016-09-06",
+  "nation" : [ "Han", "Meng", "Hui", "WeiWuEr", "Zang" ],
+  "lakes" : [ "Qinghai Lake", "Poyang Lake", "Dongting Lake", "Taihu Lake" ],
+  "provinces" : [ {
+    "name1" : "Shanxi",
+    "population" : 37751200,
+    "city1" : null
+  }, {
+    "name" : "ZheJiang",
+    "population" : 55080000,
+    "city" : null
+  } ],
+  "traffic" : {
+    "HighWay(KM)" : 4240000,
+    "Train(KM)" : 112000
+  }
+}

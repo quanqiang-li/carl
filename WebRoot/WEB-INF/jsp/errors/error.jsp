@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>出错了</title>
 <style>
 /*404页面开始*/
-.mobdec{width:700px;height:325px; margin:0 auto; background:url(<%=path%>images/gf2.png) no-repeat;}
+.mobdec{width:700px;height:325px; margin:0 auto; background:url(<%=path%>/images/gf2.png) no-repeat;}
 .mobdex{width:350px;height:180px; float:right; padding-top:130px;}
 .mobdex ul li{ list-style:none; line-height:30px;}
 .mobdex-size{font-weight:bold; font-size:14px;}

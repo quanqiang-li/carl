@@ -1,16 +1,22 @@
 package com.carl.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -39,7 +45,7 @@ public class JsonUtil {
 	/**
 	 * 当json反序列到对象时，未知属性是否终止反序列过程
 	 */
-	private boolean FAIL_ON_UNKNOWN_PROPERTIES = false;
+	private boolean FAIL_ON_UNKNOWN_PROPERTIES = true;
 	/**
 	 * 当json反序列到对象时，属性为“小写_小写”形式,转为驼峰式
 	 */
@@ -49,6 +55,10 @@ public class JsonUtil {
 	 * 优雅输出，生产谨慎使用，会增加字符量
 	 */
 	private boolean INDENT_OUTPUT = true;
+	/**
+	 * 日期格式，全局统一模式；如果要对属性特殊设置请使用此工具类提供的内部类 CustomDateSerializer
+	 */
+	private String DateFormat_pattern = "yyyy-MM-dd";
 	
 	/**
 	 * 初始化ObjectMapper对象，采用属性的默认值，如果想修改，在调用工具方法之前设置
@@ -58,10 +68,11 @@ public class JsonUtil {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, FAIL_ON_UNKNOWN_PROPERTIES);
 		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, ALLOW_SINGLE_QUOTES);
+		mapper.configure(SerializationFeature.INDENT_OUTPUT, INDENT_OUTPUT);
+		mapper.setDateFormat(new SimpleDateFormat(DateFormat_pattern));
 		if(SNAKE_CASE){
 			mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
 		}
-		mapper.configure(SerializationFeature.INDENT_OUTPUT, INDENT_OUTPUT);
 		return mapper;
 	}
 	
@@ -176,7 +187,33 @@ public class JsonUtil {
 		return object2jsonStr(readValue);
 	}
 	
-	
+	public void setALLOW_SINGLE_QUOTES(boolean aLLOW_SINGLE_QUOTES) {
+		ALLOW_SINGLE_QUOTES = aLLOW_SINGLE_QUOTES;
+	}
+
+
+	public void setFAIL_ON_UNKNOWN_PROPERTIES(boolean fAIL_ON_UNKNOWN_PROPERTIES) {
+		FAIL_ON_UNKNOWN_PROPERTIES = fAIL_ON_UNKNOWN_PROPERTIES;
+	}
+
+
+	public void setSNAKE_CASE(boolean sNAKE_CASE) {
+		SNAKE_CASE = sNAKE_CASE;
+	}
+
+
+	public void setINDENT_OUTPUT(boolean iNDENT_OUTPUT) {
+		INDENT_OUTPUT = iNDENT_OUTPUT;
+	}
+
+
+	public void setDateFormat_pattern(String dateFormat_pattern) {
+		DateFormat_pattern = dateFormat_pattern;
+	}
+
+
+
+
 	/**
 	 * 静态内部类，用以测试，说明问题
 	 * @author carl
@@ -190,25 +227,42 @@ public class JsonUtil {
 		public int popuLation;//可以接受驼峰式popu_lation
 		@JacksonXmlElementWrapper(localName = "citys")//city数组，转成xml用citys包装一层
 		public String[] city;
+		
+		public Date creat_time;
 
 		@Override
 		public String toString() {
-			return "province name:" + name + "\npopulation :" + popuLation + "\ncity:" + Arrays.deepToString(city);
+			return "province name:" + name + "\npopulation :" + 
+		popuLation + "\ncity:" + Arrays.deepToString(city) + 
+		"\ncreatTime:" + creat_time;
 		}
 	}
-	
+	/**
+	 * 在对象序列化json时，对日期属性的特殊操作，这里是指定了日期格式
+	 * 只需在属性或get方法上添加@JsonSerialize(using = CustomDateSerializer.class)  
+	 * @author carl
+	 *
+	 */
+	class CustomDateSerializer extends JsonSerializer<Date> {
+	    @Override  
+	    public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {  
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	        String formattedDate = formatter.format(value);  
+	        jgen.writeString(formattedDate);  
+	    }
+	}
 	
 	public static void main(String[] args) throws Exception {
 		JsonUtil util = new JsonUtil();
 		util.testJsonStr2Object();
 		util.testObject2jsonStr();
-		util.testJsonStr2xmlStr();
-		util.testXmlStr2jsonStr();
+		//util.testJsonStr2xmlStr();
+		//util.testXmlStr2jsonStr();
 	}
 	
 	private void testJsonStr2Object() throws Exception{
 		//String jsonStr = "{\"name\" : \"hebei\",\"population\" : 55080000,\"city\" : [\"邯郸\",\"邢台\"]}";
-		String jsonStr = "{'NAME' : \"hebei\",'popu_lation' : 55080000,'city' : ['邯郸','邢台']}";
+		String jsonStr = "{'NAME' : \"hebei\",'popu_lation' : 55080000,'city' : ['邯郸','邢台'],'creat_time' : '2016-09-25 12:25:35'}";
 		Province jsonStr2Object = jsonStr2Object(jsonStr,Province.class);//反序列到普通对象
 		System.out.println(jsonStr2Object.toString());
 	}
@@ -217,6 +271,7 @@ public class JsonUtil {
 		province.name = "Shanxi";
 		province.popuLation = 37751200;
 		province.city = new String[]{"邯郸","邢台"};
+		province.creat_time = new Date();
 		System.out.println(object2jsonStr(province));
 	}
 	private void testJsonStr2xmlStr() throws Exception{

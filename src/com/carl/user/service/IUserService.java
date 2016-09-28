@@ -7,5 +7,7 @@ import com.carl.user.model.User;
 public interface IUserService {
 
 	List<User> select(User record);
+	
+	int updateUser(User record);
 
 }

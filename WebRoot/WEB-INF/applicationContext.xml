@@ -30,8 +30,8 @@
 	<import resource="/applicationContext-shiro.xml" />
 	<import resource="/applicationContext-cxf.xml" />
 	<import resource="/applicationContext-task.xml" />
-	<import resource="/spring_hbase.xml" />
 	 -->
-	 <import resource="applicationContext-app.xml" />
+	<import resource="/applicationContext-hbase.xml" />
+	<import resource="applicationContext-app.xml" />
 	<!--<bean id="mybatisMapperDynamicLoader" class="com.ixinnuo.financial.common.util.web.MybatisMapperDynamicLoader" />-->
 </beans>

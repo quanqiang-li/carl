@@ -35,7 +35,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- 启动mvc 默认在/WEB-INF/下找springMvc-servlet.xml,若配置了contextConfigLocation参数，则按指定位置加载，空则不加载，使用上面的contextConfigLocation -->
+	<!-- 启动mvc 默认在/WEB-INF/下找<servlet-name>的标签名-servlet.xml,这里就是springMvc-servlet,若配置了contextConfigLocation参数，则按指定位置加载，空则不加载，使用上面的contextConfigLocation -->
 	<servlet>
 		<servlet-name>springMvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

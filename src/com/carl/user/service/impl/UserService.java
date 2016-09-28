@@ -19,4 +19,12 @@ public class UserService implements IUserService{
 	public List<User> select(User record) {
 		return userMapper.select(record);
 	}
+	
+
+
+	@Override
+	public int updateUser(User record) {
+		return userMapper.updateByPrimaryKey(record);
+	}
+	
 }

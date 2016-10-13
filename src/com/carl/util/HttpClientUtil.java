@@ -1,12 +1,11 @@
 package com.carl.util;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.security.GeneralSecurityException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
@@ -17,21 +16,20 @@ import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 
 @SuppressWarnings("deprecation")
@@ -185,6 +183,32 @@ public class HttpClientUtil {
 		return null;
 	}
 
+	/**
+	 * 创建ssl连接，需要证书及密码
+	 * @param caFile 证书文件，如my.keystore
+	 * @param storePassword 证书密码
+	 * @return
+	 * @throws Exception
+	 */
+	public static CloseableHttpClient createSSLClientWithKey(String caFile,String storePassword) throws Exception{
+		// Trust own CA and all self-signed certs
+		SSLContext sslcontext = SSLContexts.custom()
+				.loadTrustMaterial(new File(caFile), storePassword.toCharArray(),
+						new TrustSelfSignedStrategy())
+						.build();
+		// Allow TLSv1 protocol only
+		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+				sslcontext,
+				new String[] { "TLSv1" },
+				null,
+				SSLConnectionSocketFactory.getDefaultHostnameVerifier());
+		CloseableHttpClient httpclient = HttpClients.custom()
+				.setSSLSocketFactory(sslsf)
+				.build();
+		return httpclient;
+	}
+	
+	
 	public static void main(String[] args) {
 		String[] requestByGetMethod = requestByGetMethod("https://www.baidu.com");
 		System.out.println(Arrays.deepToString(requestByGetMethod));

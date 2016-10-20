@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.junit.Test;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -187,6 +189,12 @@ public class JsonUtil {
 		return object2jsonStr(readValue);
 	}
 	
+	public String object2xmlStr(Object valueType) throws Exception{
+		String object2jsonStr = object2jsonStr(valueType);
+		return jsonStr2xmlStr(object2jsonStr, valueType.getClass());
+	}
+	
+	
 	public void setALLOW_SINGLE_QUOTES(boolean aLLOW_SINGLE_QUOTES) {
 		ALLOW_SINGLE_QUOTES = aLLOW_SINGLE_QUOTES;
 	}
@@ -252,12 +260,24 @@ public class JsonUtil {
 	    }
 	}
 	
+	
+	
 	public static void main(String[] args) throws Exception {
 		JsonUtil util = new JsonUtil();
 		util.testJsonStr2Object();
 		util.testObject2jsonStr();
 		//util.testJsonStr2xmlStr();
 		//util.testXmlStr2jsonStr();
+	}
+	
+	@Test
+	public void testObject2xmlStr() throws Exception{
+		Province province = new Province();
+		//province.name = "Shanxi";
+		province.popuLation = 37751200;
+		province.city = new String[]{"邯郸","邢台"};
+		province.creat_time = new Date();
+		System.out.println(object2xmlStr(province));
 	}
 	
 	private void testJsonStr2Object() throws Exception{

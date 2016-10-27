@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MyHtml.html</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<script src="../../js/jQuery/jquery-2.1.1.min.js"></script>
+<script src="../../js/jBox/jBox-0.3.2.min.js"></script>
+<link href="../../js/jBox/jBox-0.3.2.css" rel="stylesheet">
+</head>
+
+<body>
+<span class="tooltip" title="My tooltip">Hover me!</span>
+<span class="tooltip" title="Another tooltip">Hover me!</span>
+</body>
+<script type="text/javascript">
+/*class样式为tooltip的元素  鼠标移上去提示title内容*/
+$('.tooltip').jBox('Tooltip');
+</script>
+
+</html>

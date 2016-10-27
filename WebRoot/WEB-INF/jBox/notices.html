@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MyHtml.html</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<script src="../../js/jQuery/jquery-2.1.1.min.js"></script>
+<script src="../../js/jBox/jBox-0.3.2.min.js"></script>
+<link href="../../js/jBox/jBox-0.3.2.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="myNotice">Click me to show a notice!</div>
+</body>
+<script type="text/javascript">
+	/*class样式为tooltip的元素  鼠标移上去提示title内容*/
+	new jBox('Notice', {
+		attach: $('#myNotice'),/*jQuery选择器，点击触发模态窗*/
+		content : 'Hurray! A notice!'
+	});
+</script>
+
+</html>

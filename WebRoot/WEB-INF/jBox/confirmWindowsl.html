@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>confirmWindowsl.html</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<script src="../../js/jQuery/jquery-2.1.1.min.js"></script>
+<script src="../../js/jBox/jBox-0.3.2.min.js"></script>
+<link href="../../js/jBox/jBox-0.3.2.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+	<div onclick="doit()" data-confirm="Do you really want to do this?">Click me!</div>
+	<a href="http://stephanwagner.me" data-confirm="Do you really want to leave this page?">Click me!</a>
+</body>
+<script type="text/javascript">
+/*对html元素使用属性data-confirm的 添加模态确认框 根据返回结果是否执行你的逻辑*/
+ 	new jBox('Confirm', {
+		confirmButton : 'Do it!',
+		cancelButton : 'Nope'
+	}); 
+	
+	function doit(){
+		alert("你点击的是确定");
+	}
+</script>
+</html>

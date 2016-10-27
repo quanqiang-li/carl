@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>modalWindows.html</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<script src="../../js/jQuery/jquery-2.1.1.min.js"></script>
+<script src="../../js/jBox/jBox-0.3.2.min.js"></script>
+<link href="../../js/jBox/jBox-0.3.2.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="myModal">Click me to open a modal window!</div>
+</body>
+<script type="text/javascript">
+/*弹出模态窗*/
+new jBox('Modal', {
+    width: 300,
+    height: 200,
+    attach: $('#myModal'),/*jQuery选择器，点击触发模态窗*/
+    title: 'My Modal Window', /*模态窗的标题*/
+    content: '<i>Hello there!</i>' /*模态窗内容*/
+});
+</script>
+</html>

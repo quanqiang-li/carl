@@ -27,6 +27,7 @@
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/static/**" location="/static/" />
 	<mvc:resources mapping="/download/**" location="/download/" />
+	<mvc:resources mapping="/**" location="/html" />
 	
 	<!-- 文件上传配置 -->
 	<bean id="multipartResolver"

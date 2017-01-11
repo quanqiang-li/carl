@@ -5,11 +5,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'test.jsp' starting page</title>
+<head>
+  <base href="<%=basePath%>">
+  
+  <title>My JSP 'test.jsp' starting page</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -18,9 +17,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-  </head>
-  
-  <body>
-    This is test JSP page. <br>
-  </body>
-</html>
+</head>
+<body>
+  This is test JSP page. <br>
+  welcome you from CarlController/test<br>
+  你的ip${ip }
+</body>

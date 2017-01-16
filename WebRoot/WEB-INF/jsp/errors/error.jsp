@@ -1,4 +1,7 @@
+<%@page import="org.apache.log4j.Logger"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="java.io.*"%>
+<%@page isErrorPage="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%
 String path = request.getContextPath();
@@ -38,5 +41,55 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </ul>
     </div>
 </div>
+<div style="display: none;">
+            <pre>
+                <%
+                    try {
+                        //全部内容先写到内存，然后分别从两个输出流再输出到页面和文件
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        PrintStream printStream = new PrintStream(byteArrayOutputStream);
+
+                        printStream.println();
+                        printStream.println("用户信息");
+                        printStream.println("账号：" + request.getSession().getAttribute("userName"));
+                        printStream.println("访问的路径: " + request.getAttribute("javax.servlet.forward.request_uri"));
+                        printStream.println();
+
+                        printStream.println("异常信息");
+                        printStream.println(exception.getClass() + " : " + exception.getMessage());
+                        printStream.println();
+
+                        Enumeration<String> e = request.getParameterNames();
+                        if (e.hasMoreElements()) {
+                            printStream.println("请求中的Parameter包括：");
+                            while (e.hasMoreElements()) {
+                                String key = e.nextElement();
+                                printStream.println(key + "=" + request.getParameter(key));
+                            }
+                            printStream.println();
+                        }
+
+                        printStream.println("堆栈信息");
+                        exception.printStackTrace(printStream);
+                        printStream.println();
+						
+                        out.print(byteArrayOutputStream);    //输出到网页
+                        /*用log替代
+                        File dir = new File(request.getRealPath("/errorLog"));
+                        if (!dir.exists()) {
+                            dir.mkdir();
+                        }
+                        String timeStamp = new SimpleDateFormat("yyyyMMddhhmmssS").format(new Date());
+                        FileOutputStream fileOutputStream = new FileOutputStream(new File(dir.getAbsolutePath() + File.separatorChar + "error-" + timeStamp + ".txt"));
+                        new PrintStream(fileOutputStream).print(byteArrayOutputStream); //写到文件
+                        */
+                        Logger log = Logger.getLogger(this.getClass());
+                        log.error(byteArrayOutputStream);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                %>
+            </pre>
+        </div>
 </body>
 </html>

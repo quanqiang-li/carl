@@ -40,4 +40,14 @@ public class CarlController {
 		map.put("ip", ip);
 		return new ModelAndView("test",map);
 	}
+	
+	@RequestMapping("/error")
+	public ModelAndView error(HttpServletRequest request,HttpServletResponse response){
+		Map<String, Object> map = new HashMap<String, Object>();
+		String remoteAddr = request.getRemoteAddr();
+		map.put("ip", remoteAddr);
+		int a = 0;
+		//double  c = 10/0;//为了抛出一个运行时异常
+		return new ModelAndView("error/error",map);
+	}
 }

@@ -62,7 +62,7 @@ public class HttpClientUtil {
 			HttpEntity entity = httpResponse.getEntity();
 			if (null != entity) {
 				result[0] = httpResponse.getStatusLine().toString();// 响应状态码
-				result[1] = EntityUtils.toString(entity, "UTF-8");// 响应内容
+				result[1] = EntityUtils.toString(entity, "UTF-8");// 响应内容，必须在close之前消费，否则会清空，只保留缓存的一小部分
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
